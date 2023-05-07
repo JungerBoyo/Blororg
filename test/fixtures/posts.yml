@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  contents: MyString
+  category: one
+  created_at: 2023-05-07 22:21:31
+  karma: 1
+  is_private: false
+  author: one
+
+two:
+  title: MyString
+  contents: MyString
+  category: two
+  created_at: 2023-05-07 22:21:31
+  karma: 1
+  is_private: false
+  author: two
