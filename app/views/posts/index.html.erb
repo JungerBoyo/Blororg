@@ -1,0 +1,15 @@
+<body>
+<div class="text-center">
+<h1>Our blog has <%= Post.count %> posts !</h1>
+
+<%= link_to "New Post", new_post_path %>
+
+<ul>
+  <% @posts.each do |post| %>
+      <li>
+        <%= link_to post.title, post %>
+      </li>
+  <% end %>
+</ul>
+</div>
+</body>
