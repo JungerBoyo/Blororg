@@ -3,4 +3,12 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  root "public#home"
+
+  get "/public", to: "public#home"
+
+  resources :posts do
+    resources :comments
+  end
+
 end
