@@ -25,6 +25,9 @@
     <%= form.check_box :is_private, class:"form-check-input", role:"switch" %>
   </div>
 
+  <div class="field form-group">
+    <%= form.number_field :user_id, id: :post_user_id, class:"form-control", value: current_user.id, type: :hidden %>
+  </div>
 
   <div class="btn-group" role="group" aria-label="Basic example">
     <%= link_to "⬅️", posts_path, class:"btn btn-outline-secondary" %>

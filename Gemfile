@@ -14,6 +14,7 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 gem "webpacker", '~> 5.4.4'
+gem 'jquery-rails'
 gem "devise", '~> 4.9.2'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
