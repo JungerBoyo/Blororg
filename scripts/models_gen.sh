@@ -38,7 +38,7 @@ gen_user_model() {
 }
 
 gen_attachment_models() {
-    # rails generate model Attachment data:binary
+    rails generate model Attachment data:binary
 
     rails generate model AttachmentProxy \
         name:string \
@@ -47,9 +47,9 @@ gen_attachment_models() {
         attachment:references
 }
 
-# gen_user_model
+gen_user_model
 gen_post_model
-# gen_comment_model
-# gen_tag_model
-# gen_category_model
+gen_comment_model
+gen_tag_model
+gen_category_model
 gen_attachment_models
