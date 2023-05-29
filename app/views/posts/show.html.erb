@@ -2,6 +2,8 @@
 
 <div class="btn-group" role="group">
   <%= link_to "⬅️", posts_path, class:"btn btn-outline-secondary" %>
-  <%= link_to "✏️", edit_post_path(@post), class:"btn btn-primary" %>
-  <%= link_to "💥", post_path, data: {turbo_method: :delete}, class:"btn btn-danger" %>
+  <% if user_signed_in? && @post.user_id == current_user.id %>
+    <%= link_to "✏️", edit_post_path(@post), class:"btn btn-primary" %>
+    <%= link_to "💥", post_path, data: {turbo_method: :delete}, class:"btn btn-danger" %>
+  <% end %>
 </div>

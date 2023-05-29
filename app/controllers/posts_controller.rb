@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: %i[ create edit update destroy ]
+  before_action :authenticate_author!, only: %i[ edit update destroy ]
 
   # GET /posts or /posts.json
   def index
@@ -12,6 +14,7 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
+    @categories = Category.all
     @post = Post.new
   end
 
@@ -62,9 +65,14 @@ class PostsController < ApplicationController
     def set_post
       @post = Post.find(params[:id])
     end
+    def authenticate_author!
+      unless current_user.id == @post.user_id
+        redirect_to root_path, alert: 'You are not the author of this post.'
+      end
+    end
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :contents, :is_private, :user_id)
+      params.require(:post).permit(:title, :contents, :is_private, :category, :user_id)
     end
 end

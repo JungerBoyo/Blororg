@@ -12,6 +12,11 @@
   <% end %>
 
   <br/><br/>
+
+  <div class="mb-3 text-end" aria-label="Default select example">
+    <%= form.collection_select :category, @categories, :name, :name, prompt: "Select a category", class:"form-control form-select" %>
+  </div>
+  
   <div class="mb-3">
     <%= form.text_area :title, rows: 2, class:"form-control", placeholder:"Title..." %>
   </div>
