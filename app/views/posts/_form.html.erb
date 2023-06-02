@@ -13,10 +13,15 @@
 
   <br/><br/>
 
-  <div class="mb-3 text-end" aria-label="Default select example">
-    <%= form.collection_select :category, @categories, :name, :name, prompt: "Select a category", class:"form-control form-select" %>
+  <div style="display: flex; align-items: flex-start">
+    <div style="flex: 1; margin-right: 10px">
+      <input class="form-control" name="tags_string" type="text_area" style="rows: 1" placeholder="tag0, tag1, .‧₊˚ ⋅* ‧₊·˚°.‧₊˚ ⋅* ‧₊·˚* ‧ˎˊ˗">
+    </div>
+    <div style="float: right">
+      <%= form.collection_select :category_id, @categories, :id, :name, { disabled: -> (category) { category.id == 0 } }, { class:"form-select", selected: 2, style:"background-color: white; margin-right: 5px; border-radius: 5px; border: 1px gray" } %>
+    </div>
   </div>
-  
+  <br/>
   <div class="mb-3">
     <%= form.text_area :title, rows: 2, class:"form-control", placeholder:"Title..." %>
   </div>

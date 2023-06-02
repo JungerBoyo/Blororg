@@ -5,7 +5,16 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    if (params[:category_id].present? && params[:category_id] != "0")
+      @posts = Post.where(category_id: params[:category_id])
+    else
+      @posts = Post.all
+    end
+
+    if params[:tags_string].present?
+      tags = params[:tags_string].split(/[,\s+]/).map(&:strip)
+      @posts = @posts.joins(:tags).where(tags: { name: tags })
+    end
   end
 
   # GET /posts/1 or /posts/1.json
@@ -14,7 +23,6 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @categories = Category.all
     @post = Post.new
   end
 
@@ -28,6 +36,13 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
+        if params[:tags_string].present?
+          tag_names = params[:tags_string].split(/[,\s+]/).map(&:strip)
+          tags = tag_names.map do |tag_name|
+            Tag.find_or_create_by(name: tag_name)
+          end
+          @post.tags << tags
+        end
         format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
@@ -73,6 +88,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :contents, :is_private, :category, :user_id)
+      params.require(:post).permit(:title, :contents, :is_private, :user_id, :category_id, :tags_string)
     end
 end

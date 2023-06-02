@@ -1,6 +1,9 @@
 <div id="<%= dom_id post %>" class="jumbotron jumbotron-fluid">
   <div class=container>
     <h1 class="display-4"><%= post.title %></h1>
+    <% post.tags.each do |tag| %>
+      <span class="badge text-bg-secondary"><%= tag.name %></span>
+    <% end %>
     <p class="lead"><%= post.contents %></p>
   </div>
 </div>
