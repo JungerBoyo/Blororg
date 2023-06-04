@@ -19,6 +19,8 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    @user_nick = User.where(id: @post.user_id).first().nick
+    @post.comments << Comment.where(post_id: @post.id)
   end
 
   # GET /posts/new
@@ -70,7 +72,7 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
+      format.html { redirect_to posts_url, notice: "post was successfully destroyed." }
       format.json { head :no_content }
     end
   end

@@ -7,3 +7,71 @@
     <%= link_to "💥", post_path, data: {turbo_method: :delete}, class:"btn btn-danger" %>
   <% end %>
 </div>
+
+<br/>
+<br/>
+<p> </p>
+<hr/>
+
+<%= render partial: 'comments/form', locals: { comment: Comment.new } %>
+
+<br/>
+<br/>
+<br/>
+<hr/>
+<br/>
+
+<% @post.comments.each do |comment| %>
+  <%= render partial: 'comments/comment', locals: { comment: comment } %>
+  <div class="btn-group" role="group" style="float: right">
+    <% if user_signed_in? && comment.user_id == current_user.id %>
+      <%= link_to "✏️", edit_post_comment_path(@post, comment), class:"btn btn-primary" %>
+      <%= link_to "💥", post_comment_path(@post, comment), data: {turbo_method: :delete}, name: "edit-comment-#{comment.id}", class:"btn btn-danger" %>
+    <% end %>
+  </div>
+  <br/>
+  <br/>
+  <br/>
+<% end %>
+
+
+<br/>
+<br/>
+
+<script>
+$(document).on("click", "a[name^='edit-comment-']", function(event) {
+  event.preventDefault();
+
+  var commentId = $(this).attr("name").split("-")[2];
+  var editUrl = $(this).attr("href");
+  var commentContainer = $(this).closest(".comment-container");
+
+  $.ajax({
+    url: editUrl,
+    method: "GET",
+    dataType: "html",
+    success: function(response) {
+      commentContainer.html(response);
+    }
+  });
+});
+
+$(document).on("submit", ".edit-comment-form", function(event) {
+  event.preventDefault();
+
+  var form = $(this);
+  var updateUrl = form.attr("action");
+
+  $.ajax({
+    url: updateUrl,
+    method: "PATCH",
+    data: form.serialize(),
+    dataType: "json",
+    success: function(response) {
+      var commentContainer = form.closest(".comment-container");
+      commentContainer.html(response.contents);
+    }
+  });
+});
+
+</script>

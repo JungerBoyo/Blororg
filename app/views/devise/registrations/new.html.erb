@@ -4,8 +4,13 @@
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="row mb-3">
+    <%= f.label :nick, class:"col-sm-2" %>
+    <%= f.text_field :nick, autofocus: true, class:"col-sm-10", autocomplete: "nick", placeholder: "nick" %>
+  </div>
+  
+  <div class="row mb-3">
     <%= f.label :email, class:"col-sm-2" %>
-    <%= f.email_field :email, autofocus: true, class:"col-sm-10", autocomplete: "email", placeholder: "email@example" %>
+    <%= f.email_field :email, class:"col-sm-10", autocomplete: "email", placeholder: "email@example" %>
   </div>
 
   <div class="row mb-3">
@@ -24,8 +29,8 @@
   </div>
 
   <div class="btn-group" role="group">
-    <%= f.submit "Sign up", class:"btn btn-outline-primary" %>
-    <%= link_to "Login", new_session_path(resource_name), class:"btn btn-primary" %>
+    <%= link_to "Login", new_session_path(resource_name), class:"btn btn-outline-primary" %>
+    <%= f.submit "Sign up", class:"btn btn-primary" %>
   </div>
   
 <% end %>

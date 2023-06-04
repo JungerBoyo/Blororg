@@ -4,6 +4,17 @@
     <% post.tags.each do |tag| %>
       <span class="badge text-bg-secondary"><%= tag.name %></span>
     <% end %>
-    <p class="lead"><%= post.contents %></p>
+    <br/>
+    <div style="float: right"> 
+      <span class="badge text-bg-primary" style="font-family: cursive">
+        by
+        <% if @user_nick %>
+          <%= @user_nick %>
+        <% else %>
+          deleted
+        <% end %>
+      </span>
+    </div>
+    <p class="lead" style="white-space: pre-line"><%= post.contents %></p>
   </div>
 </div>
