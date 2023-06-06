@@ -1,7 +1,7 @@
 class Post < ApplicationRecord
-  belongs_to :category
-  belongs_to :user
-  has_many :attachments, as: attachable,
-  has_many :tags
-  has_many :comments, dependent: :destroy
+    belongs_to :user
+    belongs_to :category
+    has_many :tag_bindings, dependent: :destroy
+    has_many :tags, through: :tag_bindings
+    has_many :comments, dependent: :destroy
 end

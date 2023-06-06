@@ -1,25 +1,46 @@
-<body>
+<%= form_with(model: post) do |form| %>
+  <% if post.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
 
-<%= form_with model: post do |form| %>
-  <div>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-    <% post.errors.full_messages_for(:title).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <br/><br/>
+
+  <div style="display: flex; align-items: flex-start">
+    <div style="flex: 1; margin-right: 10px">
+      <input class="form-control" name="tags_string" type="text_area" style="rows: 1" placeholder="tag0, tag1, .‧₊˚ ⋅* ‧₊·˚°.‧₊˚ ⋅* ‧₊·˚* ‧ˎˊ˗">
+    </div>
+    <div style="float: right">
+      <%= form.collection_select :category_id, @categories, :id, :name, { disabled: -> (category) { category.id == 0 } }, { class:"form-select", selected: 2, style:"background-color: white; margin-right: 5px; border-radius: 5px; border: 1px gray" } %>
+    </div>
+  </div>
+  <br/>
+  <div class="mb-3">
+    <%= form.text_area :title, rows: 2, class:"form-control", placeholder:"Title..." %>
   </div>
 
-  <div>
-    <%= form.label :contents %><br>
-    <%= form.text_area :contents %><br>
-    <% post.errors.full_messages_for(:body).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
+  <div class="mb-3">
+    <%= form.text_area :contents, class:"form-control", rows: 16, placeholder:"contents..." %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-check form-switch" style="text-align: right; display: flex; justify-content: flex-end">
+    <%= form.label :is_private, "🔒", class:"form-check-label", style:"z-index: 9999" %>
+    <%= form.check_box :is_private, class:"form-check-input", role:"switch" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.number_field :user_id, id: :post_user_id, class:"form-control", value: current_user.id, type: :hidden %>
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <%= link_to "⬅️", posts_path, class:"btn btn-outline-secondary" %>
+    <%= form.submit "🔥", class:"btn btn-primary"%>
   </div>
 <% end %>
-
-</body>

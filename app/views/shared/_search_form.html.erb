@@ -1,0 +1,15 @@
+<% if false %>
+  <%# <form class="d-flex" action="/search" method="get" role="search"> %>
+<% end %>
+<%= form_tag(posts_path, method: "get", class:"d-flex") do %>
+  <select name="category_id" style="background-color: white; margin-right: 5px; border-radius: 5px; border: 1px gray">
+    <% categories.each do |category| %>
+      <option value="<%= category.id %>"><%= category.name %></option>
+    <% end %>
+  </select>
+  <input class="form-control me-2" name="tags_string" type="search" placeholder="tag0, tag1, .‧₊˚ ⋅* ‧₊·˚°.‧₊˚ ⋅* ‧₊·˚* ‧ˎˊ˗" aria-label="Search">
+  <button class="btn btn-outline-black" type="submit">🔍</button>
+<% end %>
+<% if false %>
+  </form> 
+<% end %>

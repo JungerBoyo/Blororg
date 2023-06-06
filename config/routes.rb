@@ -1,14 +1,8 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
-  root "public#home"
-
-  get "/public", to: "public#home"
-
+  devise_for :users, :controllers => { registrations: 'users/registrations' }
   resources :posts do
-    resources :comments
+    resources :comments, only: [:create, :edit, :update, :destroy]
   end
-
+  #get 'home/index'
+  root 'home#index'
 end

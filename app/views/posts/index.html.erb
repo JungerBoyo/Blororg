@@ -1,15 +1,23 @@
-<body>
-<div class="text-center">
-<h1>Our blog has <%= Post.count %> posts !</h1>
+<br/><br/>
+<table class="table table-hover">
+  <tbody>
+    <div id="posts">
+      <% @posts.each do |post| %>
+        <tr data-link="<%= post_path(post.id) %>">
+          <td>
+            <div style="width: 800px; height: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              <%= post.title %>
+            </div>
+          </td>
+          <td style="text-align: right">
+            <%= link_to '➡️', post_path(post.id), class:"btn btn-outline-secondary", style:"text-align: right" %>
+          </td>
+        </tr>
+      <% end %>
+    </div>
+  </tbody>
+</table>
 
-<%= link_to "New Post", new_post_path %>
-
-<ul>
-  <% @posts.each do |post| %>
-      <li>
-        <%= link_to post.title, post %>
-      </li>
-  <% end %>
-</ul>
-</div>
-</body>
+<% if user_signed_in? %>
+  <%= link_to '🪄', new_post_path, class:"btn btn-primary", style:"text-align: right" %>
+<% end %>

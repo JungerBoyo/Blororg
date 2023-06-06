@@ -2,8 +2,6 @@
 
 one:
   name: MyString
-  post: one
 
 two:
   name: MyString
-  post: two

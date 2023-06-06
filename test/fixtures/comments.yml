@@ -2,14 +2,6 @@
 
 one:
   contents: MyString
-  created_at: 2023-05-07 22:14:19
-  karma: 1
-  post: one
-  user: one
 
 two:
   contents: MyString
-  created_at: 2023-05-07 22:14:19
-  karma: 1
-  post: two
-  user: two
