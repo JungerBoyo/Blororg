@@ -22,17 +22,18 @@ class CommentsController < ApplicationController
   def edit
     @post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
+    @editing = true
     respond_to do |format|
-      format.html { render partial: "comments/edit_form", locals: { comment: @comment } }
+      format.js
     end
   end
 
   def update
+    @post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to post_path(@post), notice: "Comment was successfully updated." }
-        format.json { render :show, status: :ok, location: @comment }
+        format.js
       else
         format.html { redirect_to post_path(@post), alert: 'Failed to update comment!' }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
