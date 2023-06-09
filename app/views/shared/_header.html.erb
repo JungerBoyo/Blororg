@@ -27,6 +27,11 @@
             <!--<li><hr class="dropdown-divider"></li>-->
           </ul>
         </li>
+        <% if current_user %>
+            <li class="nav-item">
+              <%= link_to '🗿', admin_path, class:"nav-link" if current_user.admin? %>
+            </li>
+        <% end %>
       </ul>
       <%= render 'shared/search_form', categories: @categories %> 
     </div>

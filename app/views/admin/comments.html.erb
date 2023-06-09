@@ -1,0 +1,24 @@
+<div class="container">
+  <h1 class="text-center">Administrator</h1>
+  <%= render 'admin/nav_links' %>
+  <table class="table table-dark table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Comment</th>
+      <th scope="col">Post</th>
+      <th scope="col">Author</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @comments.each do |comment| %>
+      <tr>
+        <th scope="row"><%= comment.id %></th>
+        <td><%= link_to comment.contents, admin_comment_path(comment.id) %></td>
+        <td><%= Post.find(comment.post_id).title %></td>
+        <td><%= User.find(comment.user_id).nick %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

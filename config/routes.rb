@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+  authenticated :user, ->(user) {user.admin?} do
+    get 'admin', to: 'admin#index'
+    get 'admin/posts'
+    get 'admin/comments'
+    get 'admin/users'
+    get 'admin/categories'
+    get 'admin/new'
+    get 'admin/show_post/:id', to: 'admin#show_post', as: 'admin_post'
+    get 'admin/show_comment/:id', to: 'admin#show_comment', as: 'admin_comment'
+  end
+
   devise_for :users, :controllers => { registrations: 'users/registrations' }
   resources :posts do
     resources :comments, only: [:create, :edit, :update, :destroy]

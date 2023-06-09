@@ -1,0 +1,32 @@
+<div class="container">
+  <h1 class="text-center">Administrator</h1>
+  <%= render 'admin/nav_links' %>
+  <div class="text-center mt-5">
+    <div class="btn-group">
+      <%= link_to "Edit", edit_post_comment_path(@comment), class:"btn btn-warning", remote: true %>
+      <%= link_to "Delete", post_comment_path(@comment), data: {turbo_method: :delete}, class:"btn btn-danger" %>
+    </div>
+  </div>
+  <div class="row mt-1">
+    <p>
+      <strong>Belongs to post:</strong> <%= Post.find(@comment.post_id).title %>
+    </p>
+  </div>
+  <div class="row mt-1">
+    <p>
+      <strong>Contents:</strong> <%= @comment.contents %>
+    </p>
+  </div>
+  <div class="row mt-1">
+    <p>
+      <strong>Author:</strong>
+      <%= User.find(@comment.user_id).email + " | " + User.find(@comment.user_id).nick %>
+    </p>
+  </div>
+  <div class="row mt-1">
+    <p>
+      <strong>Created at:</strong>
+      <%= @comment.created_at %>
+    </p>
+  </div>
+</div>
