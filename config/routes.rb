@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     get 'admin/show_comment/:id', to: 'admin#show_comment', as: 'admin_comment'
   end
 
+  get 'profile/show/:id', to: 'profile#show', as: 'user_profile'
+
   devise_for :users, :controllers => { registrations: 'users/registrations' }
   resources :posts do
     resources :comments, only: [:create, :edit, :update, :destroy]

@@ -1,0 +1,32 @@
+<div>
+  <% if @user.avatar.present? %>
+    <div class="text-center">
+      <%= image_tag @user.avatar, class: "rounded-circle", style: "border: solid black;" %>
+    </div>
+  <% else %>
+    <div class="text-center">
+      <%= image_tag asset_path('default_avatar.jpg'), class: "rounded-circle", style: "border: solid black;" %>
+    </div>
+  <% end %>
+
+  <br/>
+  <br/>
+
+  <div class="row mb-3">
+    <p class="col-sm-2"> nick </p>
+    <p class="col-sm-10"> <%= @user.nick %> </p>
+  </div>
+
+  <div class="row mb-3">
+    <p class="col-sm-2"> description </p>
+    <p class="col-sm-10"> <%= @user.description %> </p>
+  </div>
+
+  <div class="row mb-3">
+    <p class="col-sm-2"> email </p>
+    <p class="col-sm-10"> <%= @user.email %> </p>
+  </div>
+</div>
+
+<br/>
+<br/>

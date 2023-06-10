@@ -19,7 +19,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
-    @user_nick = User.where(id: @post.user_id).first().nick
+    @user = User.where(id: @post.user_id).first()
     @post.comments << Comment.where(post_id: @post.id)
   end
 
