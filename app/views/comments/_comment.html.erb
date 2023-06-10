@@ -1,33 +1,16 @@
-<script>
-  function toggleEditing(event) {
-    const commentId = event.target.dataset.commentId
-    console.log('editing comment commentId:', commentId)
-    const commentForm = this.commentFormTarget.querySelector(`[data-id="${commentId}"]`)
-    commentForm.classList.toggle("editing")
-  }
-</script>
 <div class="comment" data-id="<%= comment.id %>">
-  <% if defined?(@editing) && @editing %>
-    <%= render partial: "comments/form_edit", locals: { comment: comment } %>
-  <% else %>
-    <figure>
-      <blockquote style="font-size: 15px; border: 1px solid lightgray; padding: 10px; border-radius: 5px" class="blockquote">
-        <p><%= comment.contents %></p>
-      </blockquote>
-      <figcaption class="blockquote-footer">
-        <cite title="Source Title"><%= @user_nick %></cite>
-      </figcaption>
-    </figure>
-    <% if user_signed_in? && comment.user_id == current_user.id %>
-      <div class="btn-group" role="group" style="float: right">
-        <%= link_to "✏️", "#", class: "btn btn-primary", data: { action: "click->comment-editing#toggleEditing", comment_id: comment.id } %>
-
-        <% if false %>
-        <%= link_to "✏️", edit_post_comment_path(@post, comment), class:"btn btn-primary", remote: true %>
-        <% end %>
-        
-        <%= link_to "💥", post_comment_path(@post, comment), data: {turbo_method: :delete}, class:"btn btn-danger" %>
-      </div>
-    <% end %>
+  <figure>
+    <blockquote style="font-size: 15px; border: 1px solid lightgray; padding: 10px; border-radius: 5px" class="blockquote">
+      <p><%= comment.contents %></p>
+    </blockquote>
+    <figcaption class="blockquote-footer">
+      <cite title="Source Title"><%= @user_nick %></cite>
+    </figcaption>
+  </figure>
+  <% if user_signed_in? && comment.user_id == current_user.id %>
+    <div class="btn-group" role="group" style="float: right">
+      <%= link_to "✏️", edit_post_comment_path(@post, comment), class:"btn btn-primary" %>
+      <%= link_to "💥", post_comment_path(@post, comment), data: {turbo_method: :delete}, class:"btn btn-danger" %>
+    </div>
   <% end %>
 </div>
