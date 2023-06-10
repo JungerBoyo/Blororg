@@ -16,6 +16,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
       if params[:avatar].present?
         user.avatar.attach(params[:avatar])
       end
+      if params[:post_password_digest].present?
+        user.set_post_password(params[:post_password_digest])
+      end
     end
   end
 
@@ -29,6 +32,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super do |user|
       if params[:avatar].present?
         user.avatar.attach(params[:avatar])
+      end
+      if params[:post_password_digest].present?
+        user.set_post_password(params[:post_password_digest])
       end
     end
   end
@@ -51,12 +57,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:nick, :avatar, :description])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:nick, :avatar, :description, :post_password_digest])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:nick, :avatar, :description])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:nick, :avatar, :description, :post_password_digest])
   end
 
   # The path used after sign up.

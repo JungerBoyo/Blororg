@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   get 'profile/show/:id', to: 'profile#show', as: 'user_profile'
 
   devise_for :users, :controllers => { registrations: 'users/registrations' }
+  
+  post 'posts/validate_post_password/:id', to: 'posts#validate_post_password'
+  get 'posts/validate_post_password/:id', to: 'posts#enter_post_password', as: 'validate_post_password'
+
   resources :posts do
     resources :comments, only: [:create, :edit, :update, :destroy]
   end
