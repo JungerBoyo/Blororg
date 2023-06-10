@@ -4,7 +4,11 @@
       <p><%= comment.contents %></p>
     </blockquote>
     <figcaption class="blockquote-footer">
-      <cite title="Source Title"><%= @user_nick %></cite>
+      <cite title="Source Title">
+        <span class="badge text-bg-secondary">
+          <%= link_to comment.user.nick, user_profile_url(comment.user) %>
+        </span>
+      </cite>
     </figcaption>
   </figure>
   <% if user_signed_in? && comment.user_id == current_user.id %>
