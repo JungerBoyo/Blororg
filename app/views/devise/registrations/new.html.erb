@@ -4,6 +4,11 @@
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="row mb-3">
+    <%= f.label :avatar, class:"col-sm-2" %>
+    <%= f.file_field :avatar, class:"col-sm-10" %>
+  </div>
+
+  <div class="row mb-3">
     <%= f.label :nick, class:"col-sm-2" %>
     <%= f.text_field :nick, autofocus: true, class:"col-sm-10", autocomplete: "nick", placeholder: "nick" %>
   </div>
