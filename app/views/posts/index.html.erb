@@ -10,7 +10,11 @@
             </div>
           </td>
           <td style="text-align: right">
-            <%= link_to '➡️', post_path(post.id), class:"btn btn-outline-secondary", style:"text-align: right" %>
+            <% if post.is_private && (!(user_signed_in?) || current_user.id != post.user_id) %>
+              <%= link_to '🔓', post_path(post.id), class:"btn btn-outline-secondary", style:"text-align: right" %>
+            <% else %>
+              <%= link_to '➡️', post_path(post.id), class:"btn btn-outline-secondary", style:"text-align: right" %>
+            <% end %>
           </td>
         </tr>
       <% end %>

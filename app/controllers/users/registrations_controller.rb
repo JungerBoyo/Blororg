@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'logger'
 
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
@@ -10,9 +11,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super do |user|
+      if params[:avatar].present?
+        user.avatar.attach(params[:avatar])
+      end
+      if params[:post_password_digest].present?
+        user.set_post_password(params[:post_password_digest])
+      end
+    end
+  end
 
   # GET /resource/edit
   # def edit
@@ -20,9 +28,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    super do |user|
+      if params[:avatar].present?
+        user.avatar.attach(params[:avatar])
+      end
+      if params[:post_password_digest].present?
+        user.set_post_password(params[:post_password_digest])
+      end
+    end
+  end
 
   # DELETE /resource
   # def destroy
@@ -42,12 +57,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:nick])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:nick, :avatar, :description, :post_password_digest])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:nick])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:nick, :avatar, :description, :post_password_digest])
   end
 
   # The path used after sign up.

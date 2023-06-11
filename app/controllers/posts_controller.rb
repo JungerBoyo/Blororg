@@ -19,8 +19,40 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
-    @user_nick = User.where(id: @post.user_id).first().nick
-    @post.comments << Comment.where(post_id: @post.id)
+    if @post.is_private && current_user != @post.user && !flash[:authenticated]
+      respond_to do |format|
+        format.html { redirect_to validate_post_password_path(@post) }
+      end
+    else
+      respond_to do |format|
+        @user = User.where(id: @post.user_id).first()
+        @post.comments << Comment.where(post_id: @post.id)
+        format.html
+      end
+    end
+  end
+
+  def enter_post_password
+    @post = Post.find(params[:id])
+    @password = ""
+  end
+
+  def validate_post_password
+    @post = Post.find(params[:id])
+    @user = User.where(id: @post.user_id).first()
+    entered_password = params[:password]
+  
+    if @user.authenticate_post_password(entered_password)
+      flash[:authenticated] = true
+      flash.keep(:authenticated)
+      respond_to do |format|
+        format.html { redirect_to post_path(@post) }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to validate_post_password_path(@post), alert: "Invalid password!" }
+      end
+    end
   end
 
   # GET /posts/new

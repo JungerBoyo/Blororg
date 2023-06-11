@@ -4,23 +4,40 @@
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="row mb-3">
+    <%= f.label :avatar, class:"col-sm-2" %>
+    <%= f.file_field :avatar, class:"col-sm-10" %>
+  </div>
+
+  <div class="row mb-3">
     <%= f.label :nick, class:"col-sm-2" %>
     <%= f.text_field :nick, autofocus: true, class:"col-sm-10", autocomplete: "nick", placeholder: "nick" %>
   </div>
   
+  <div class="mb-3">
+    <%= f.label :description, class:"col-sm-2" %>
+    <%= f.text_area :description, rows: 3, class:"form-control", placeholder:"Description..." %>
+  </div>
+
   <div class="row mb-3">
     <%= f.label :email, class:"col-sm-2" %>
     <%= f.email_field :email, class:"col-sm-10", autocomplete: "email", placeholder: "email@example" %>
   </div>
 
   <div class="row mb-3">
-    <div class="col-sm-2">
-      <%= f.label :password %>
-      <% if @minimum_password_length %>
-        <em><%= @minimum_password_length %> characters minimum</em>
-      <% end %>
-    </div>
+    <%= f.label :post_password_digest, class:"col-sm-2" %>
+    <%= f.password_field :post_password_digest, class:"col-sm-10", autocomplete: "new-password", placeholder: "******" %>
+    <% if @minimum_password_length %>
+      <br />
+      <em><%= @minimum_password_length %> characters minimum</em>
+    <% end %>
+  </div>
+
+  <div class="row mb-3">
+    <%= f.label :password, class:"col-sm-2" %>
     <%= f.password_field :password, autocomplete: "new-password", class:"col-sm-10", placeholder:"******" %>
+    <% if @minimum_password_length %>
+      <em><%= @minimum_password_length %> characters minimum</em>
+    <% end %>
   </div>
 
   <div class="row mb-3">

@@ -8,8 +8,8 @@
     <div style="float: right"> 
       <span class="badge text-bg-primary" style="font-family: cursive">
         by
-        <% if @user_nick %>
-          <%= @user_nick %>
+        <% if @user %>
+          <%= link_to @user.nick, user_profile_url(@user) %>
         <% else %>
           deleted
         <% end %>
