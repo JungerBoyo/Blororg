@@ -35,6 +35,7 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
+    @post.images.attach(params[:images])
 
     respond_to do |format|
       if @post.save
@@ -90,6 +91,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :contents, :is_private, :user_id, :category_id, :tags_string)
+      params.require(:post).permit(:title, :contents, :is_private, :user_id, :category_id, :tags_string, :images)
     end
 end

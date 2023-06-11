@@ -27,8 +27,13 @@
   </div>
 
   <div class="mb-3">
-    <%= form.text_area :contents, class:"form-control", rows: 16, placeholder:"contents..." %>
+    <%= form.text_area :contents, contenteditable:"true", id: "post_content", class:"form-control", rows: 16, placeholder:"contents..." %>
   </div>
+
+  <div class="row mb-3">
+    <%= form.file_field :images, onchange:"return updateFiles()", multiple: true, class:"col-sm-10" %>
+  </div>
+  <ul id="file-list"></ul>
 
   <div class="form-check form-switch" style="text-align: right; display: flex; justify-content: flex-end">
     <%= form.label :is_private, "🔒", class:"form-check-label", style:"z-index: 9999" %>
@@ -44,3 +49,46 @@
     <%= form.submit "🔥", class:"btn btn-primary"%>
   </div>
 <% end %>
+
+<script>
+    function updateFiles() {
+      var files = event.target.files;
+      var fileList = document.getElementById('file-list');
+
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var listItem = document.createElement('li');
+        listItem.textContent = file.name;
+
+        // Create a delete button
+        var deleteButton = document.createElement('button');
+        deleteButton.textContent = 'X';
+        deleteButton.addEventListener('click', createDeleteHandler(file, listItem));
+
+        listItem.appendChild(deleteButton);
+        fileList.appendChild(listItem);
+
+        // Read the file and display a preview
+        var reader = new FileReader();
+        reader.onload = (function(file) {
+          return function(e) {
+            // var preview = document.createElement('img');
+            // preview.src = e.target.result;
+            // preview.classList.add('preview');
+            listItem.insertBefore(deleteButton);
+          };
+        })(file);
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function createDeleteHandler(file, listItem) {
+      return function() {
+        // Remove the file from the list
+        listItem.remove();
+
+        // Handle additional logic for file deletion
+        // For example, you can update the server-side record or perform other actions.
+      };
+    } 
+</script>
