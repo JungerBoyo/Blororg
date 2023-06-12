@@ -2,11 +2,11 @@
   <div class=container>
     <h1 class="display-4"><%= post.title %></h1>
     <% post.tags.each do |tag| %>
-      <span class="badge text-bg-secondary"><%= tag.name %></span>
+      <span class="badge text-bg-light"><%= tag.name %></span>
     <% end %>
     <br/>
     <div style="float: right"> 
-      <span class="badge text-bg-primary" style="font-family: cursive">
+      <span class="badge text-bg-light" style="font-family: cursive">
         by
         <% if @user %>
           <%= link_to @user.nick, user_profile_url(@user) %>
@@ -15,6 +15,13 @@
         <% end %>
       </span>
     </div>
+    <% if post.title_image.present? %>
+      <br/>
+      <div class="text-center">
+        <%= image_tag @post.title_image, class: "rounded-circle" %>
+      </div>
+      <br/>
+    <% end %>
     <p class="lead" style="white-space: pre-line"><%= post.contents %></p>
   </div>
 </div>

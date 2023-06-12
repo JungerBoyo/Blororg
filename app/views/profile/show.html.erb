@@ -27,6 +27,32 @@
     <p class="col-sm-10"> <%= @user.email %> </p>
   </div>
 </div>
-
+<br/>
+<div style="text-align: center">
+<h2>📜</h2>
+</div>
+<br/>
+<table class="table table-hover">
+  <tbody>
+    <div id="posts">
+      <% @posts.each do |post| %>
+        <tr data-link="<%= post_path(post.id) %>">
+          <td>
+            <div style="width: 800px; height: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              <%= post.title %>
+            </div>
+          </td>
+          <td style="text-align: right">
+            <% if post.is_private && (!(user_signed_in?) || current_user.id != post.user_id) %>
+              <%= link_to '🔓', post_path(post.id), class:"btn btn-outline-secondary", style:"text-align: right" %>
+            <% else %>
+              <%= link_to '➡️', post_path(post.id), class:"btn btn-outline-secondary", style:"text-align: right" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </div>
+  </tbody>
+</table>
 <br/>
 <br/>

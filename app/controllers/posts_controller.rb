@@ -62,6 +62,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+    @tags_string = @post.tags.pluck(:name).join(", ")
   end
 
   # POST /posts or /posts.json
@@ -77,6 +78,9 @@ class PostsController < ApplicationController
           end
           @post.tags << tags
         end
+        if params[:title_image].present?
+          @post.title_image.attach(params[:title_image])
+        end
         format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
@@ -90,6 +94,26 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
+        if params[:title_image].present?
+          @post.title_image.attach(params[:title_image])
+        end
+        @post = Post.find(params[:id])
+        tag_names = params[:tags_string].split(/[,\s+]/).map(&:strip)
+        existing_tags = @post.tags.to_a
+        tag_names.each do |tag_name|
+          tag = Tag.find_or_create_by(name: tag_name)
+          @post.tags << tag unless @post.tags.include?(tag)
+          existing_tags.delete(tag)
+        end
+      
+        existing_tags.each do |tag|
+          if tag.posts.count == 1
+            tag.destroy
+          else
+            tag.posts.delete(@post)
+          end
+        end
+
         format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @post }
       else
@@ -122,6 +146,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :contents, :is_private, :user_id, :category_id, :tags_string)
+      params.require(:post).permit(:title, :contents, :is_private, :user_id, :category_id, :tags_string, :title_image)
     end
 end
